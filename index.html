@@ -64,6 +64,7 @@
           <li class="active"><a href="index.html">Home</a></li>
           <li><a href="#services">Services</a></li>
           <li><a href="#materials">Materials</a></li>
+          <li><a href="#calculator">Calculator</a></li>
           <li><a href="#contact">Contact</a></li>
         </ul>
       </nav>
@@ -233,6 +234,65 @@
             <li>Gravel Delivery in Wasilla and Mat-Su</li>
             <li>Material Pickup at Our Local Gravel Pit</li>
           </ul>
+        </section>
+
+        <section class="post" id="calculator">
+          <header class="major">
+            <h2>Gravel Calculator</h2>
+            <p>
+              Estimate how many cubic yards of gravel your project needs for a
+              driveway, pad, road, or parking area.
+            </p>
+          </header>
+
+          <form id="gravel-calculator" class="calculator-form">
+            <div class="fields">
+              <div class="field third">
+                <label for="calc-length">Length (ft)</label>
+                <input
+                  type="text"
+                  id="calc-length"
+                  inputmode="decimal"
+                  placeholder="40"
+                />
+              </div>
+
+              <div class="field third">
+                <label for="calc-width">Width (ft)</label>
+                <input
+                  type="text"
+                  id="calc-width"
+                  inputmode="decimal"
+                  placeholder="12"
+                />
+              </div>
+
+              <div class="field third">
+                <label for="calc-depth">Depth (in)</label>
+                <input
+                  type="text"
+                  id="calc-depth"
+                  inputmode="decimal"
+                  placeholder="4"
+                />
+              </div>
+            </div>
+
+            <ul class="actions">
+              <li>
+                <button type="button" class="button primary" id="calc-btn">
+                  Calculate Gravel
+                </button>
+              </li>
+            </ul>
+
+            <p class="calculator-result" id="calc-result" aria-live="polite">
+              Enter your project dimensions to see an estimate.
+            </p>
+            <p class="calculator-note">
+              Tip: Many driveways use about 3 to 4 inches of gravel.
+            </p>
+          </form>
         </section>
       </div>
 

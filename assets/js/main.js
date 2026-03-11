@@ -254,4 +254,31 @@
 			});
 
 		}
+
+	var calcButton = document.getElementById('calc-btn');
+
+	if (calcButton) {
+
+		calcButton.addEventListener('click', function() {
+
+			var length = parseFloat(document.getElementById('calc-length').value),
+				width = parseFloat(document.getElementById('calc-width').value),
+				depth = parseFloat(document.getElementById('calc-depth').value),
+				result = document.getElementById('calc-result'),
+				cubicYards;
+
+			if (!isFinite(length) || !isFinite(width) || !isFinite(depth) || length <= 0 || width <= 0 || depth <= 0) {
+				result.textContent = 'Enter valid length, width, and depth values.';
+				result.classList.add('is-error');
+				return;
+			}
+
+			cubicYards = (length * width * (depth / 12)) / 27;
+
+			result.textContent = 'Estimated gravel needed: ' + cubicYards.toFixed(2) + ' cubic yards.';
+			result.classList.remove('is-error');
+
+		});
+
+	}
 })(jQuery);

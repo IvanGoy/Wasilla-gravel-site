@@ -2910,6 +2910,44 @@ input, select, textarea {
 
 			}
 
+	.calculator-form {
+		border: solid 1px rgba(144, 148, 152, 0.25);
+		padding: 2rem;
+	}
+
+		.calculator-form .actions {
+			margin-bottom: 1rem;
+		}
+
+		.calculator-result {
+			font-family: "Source Sans Pro", Helvetica, sans-serif;
+			font-size: 1.35rem;
+			font-weight: 700;
+			letter-spacing: 0.03em;
+			margin: 0 0 0.5rem 0;
+			text-transform: none;
+		}
+
+			.calculator-result.is-error {
+				color: #c62828;
+			}
+
+		.calculator-note {
+			margin: 0;
+		}
+
+		@media screen and (max-width: 736px) {
+
+			.calculator-form {
+				padding: 1.5rem;
+			}
+
+				.calculator-result {
+					font-size: 1.1rem;
+				}
+
+		}
+
 			ul.divided li {
 				border-top: solid 1px;
 				padding: 0.5rem 0;
