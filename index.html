@@ -617,14 +617,28 @@
         gap: 1.1rem;
         grid-template-columns: 1fr;
       }
+      /* Tablet: 2-up. Span-based so the 5th (orphan) tile can center. */
       @media (min-width: 620px) {
         .svc-grid {
-          grid-template-columns: 1fr 1fr;
+          grid-template-columns: repeat(4, 1fr);
+        }
+        .svc-grid > .svc {
+          grid-column: span 2;
+        }
+        .svc-grid > .svc:nth-child(5) {
+          grid-column: 2 / span 2;
         }
       }
+      /* Desktop: 3-up. Center the last two tiles on the second row. */
       @media (min-width: 980px) {
         .svc-grid {
-          grid-template-columns: repeat(3, 1fr);
+          grid-template-columns: repeat(6, 1fr);
+        }
+        .svc-grid > .svc:nth-child(5) {
+          grid-column: span 2;
+        }
+        .svc-grid > .svc:nth-child(4) {
+          grid-column: 2 / span 2;
         }
       }
       .svc {
@@ -1147,14 +1161,7 @@
             </div>
           </div>
           <div class="svc">
-            <img src="images/Pitrun.avif" alt="Pit run gravel" loading="lazy" decoding="async" />
-            <div class="svc-body">
-              <h3>Material Pickup</h3>
-              <p>Load up at our local pit on your own schedule.</p>
-            </div>
-          </div>
-          <div class="svc">
-            <img src="images/loader working.avif" alt="Loader working at the Wasilla gravel pit" loading="lazy" decoding="async" />
+            <img src="images/landscape-rock.webp" alt="Large river rock and landscape stone" loading="lazy" decoding="async" />
             <div class="svc-body">
               <h3>Landscape Rock</h3>
               <p>Bone rock and larger decorative rock in various sizes.</p>
