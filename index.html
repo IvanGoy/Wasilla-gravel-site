@@ -517,6 +517,54 @@
         color: var(--cream-dim);
       }
 
+      /* ---------- Ordering minimums ---------- */
+      .min-block {
+        margin-top: 1.5rem;
+        border: 1px solid var(--line);
+        border-left: 3px solid var(--amber);
+        border-radius: 6px;
+        background: var(--black);
+        padding: 1.3rem 1.4rem;
+      }
+      .min-block h3 {
+        font-size: 1.4rem;
+        margin-bottom: 0.4rem;
+      }
+      .min-block .min-row {
+        padding: 0.7rem 0;
+        border-top: 1px dashed var(--line);
+        font-size: 0.95rem;
+        color: var(--cream-dim);
+        line-height: 1.5;
+      }
+      .min-block .min-row b {
+        display: block;
+        font-family: var(--ff-display);
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        font-size: 0.82rem;
+        color: var(--amber);
+        margin-bottom: 0.15rem;
+      }
+      .field-hint {
+        margin: 0.4rem 0 0;
+        font-size: 0.82rem;
+        color: var(--cream-dim);
+        line-height: 1.45;
+      }
+      .calc-result .calc-min-note {
+        display: block;
+        margin-top: 0.55rem;
+        font-family: var(--ff-body);
+        font-weight: 400;
+        text-transform: none;
+        letter-spacing: 0;
+        font-size: 0.9rem;
+        color: var(--cream-dim);
+        line-height: 1.45;
+      }
+
       /* ---------- SERVICES (photo-driven, no filler) ---------- */
       .svc-grid {
         display: grid;
@@ -953,6 +1001,18 @@
           </div>
         </div>
 
+        <div class="min-block">
+          <h3>Ordering minimums</h3>
+          <p class="min-row">
+            <b>Delivery</b>10 yards minimum. Our trucks haul 10-yard loads and we
+            don't run partial.
+          </p>
+          <p class="min-row">
+            <b>Yard pickup</b>$50 minimum per load. Small loads are fine, you'll
+            just pay the $50 whether it's one yard or six.
+          </p>
+        </div>
+
         <div class="rate-secondary">
           <div class="rate-card">
             <h3>Delivery</h3>
@@ -960,6 +1020,10 @@
             <div class="mini">
               <span class="k">Delivery rate</span>
               <span class="v">$145<small style="font-size:0.7em;color:var(--cream-dim)">/hr</small></span>
+            </div>
+            <div class="mini">
+              <span class="k">Minimum load</span>
+              <span class="v">10 yd</span>
             </div>
           </div>
           <div class="rate-card">
@@ -1128,6 +1192,10 @@
                   placeholder="What material, roughly how many yards, and the delivery location."
                   required
                 ></textarea>
+                <p class="field-hint">
+                  Heads up: delivery has a 10-yard minimum. Smaller amounts are
+                  available for yard pickup with a $50 minimum per load.
+                </p>
               </div>
 
               <button type="submit" class="btn btn-call">Send Quote Request</button>
@@ -1234,6 +1302,15 @@
           result.textContent =
             "Estimated: " + cubicYards.toFixed(1) + " cubic yards";
           result.classList.remove("is-error");
+
+          if (cubicYards < 10) {
+            var note = document.createElement("span");
+            note.className = "calc-min-note";
+            note.textContent =
+              "That's under our 10-yard delivery minimum. Loads this size are " +
+              "available for yard pickup with a $50 minimum per load.";
+            result.appendChild(note);
+          }
         });
       })();
     </script>
