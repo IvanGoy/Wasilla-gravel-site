@@ -921,19 +921,37 @@
         height: 1em;
         fill: currentColor;
       }
-      /* Brevo behavioral bits (main.js toggles these) */
+      /* Brevo behavioral bits (main.js toggles these).
+         main.js reveals a panel by adding .sib-form-message-panel--active.
+         That class gets its display rule from Brevo's stylesheet, which we
+         deliberately don't load — so it must be defined here or the panel
+         stays hidden and a successful signup looks like nothing happened. */
       #newsletter .sib-form-message-panel {
         display: none;
-        margin-bottom: 1rem;
-        padding: 0.8rem 1rem;
+        margin: 0 0 1rem;
+        padding: 1rem 1.15rem;
         border-radius: 4px;
         font-family: var(--ff-body);
-        font-size: 0.92rem;
+        font-size: 1rem;
+        line-height: 1.5;
         background: var(--panel-2);
         border: 1px solid var(--line);
       }
+      #newsletter .sib-form-message-panel.sib-form-message-panel--active {
+        display: block;
+      }
+      #newsletter #success-message.sib-form-message-panel {
+        border-left: 3px solid var(--amber);
+      }
+      #newsletter #error-message.sib-form-message-panel {
+        border-left: 3px solid #e0533f;
+      }
+      #newsletter .sib-form-message-panel__text {
+        margin: 0;
+        padding: 0;
+      }
       #newsletter #success-message .sib-form-message-panel__inner-text {
-        color: #4ad991;
+        color: var(--cream);
       }
       #newsletter #error-message .sib-form-message-panel__inner-text {
         color: #f0a99b;
@@ -944,6 +962,17 @@
         vertical-align: middle;
         margin-right: 0.4rem;
         fill: currentColor;
+      }
+      #newsletter #success-message .sib-icon {
+        fill: var(--amber);
+      }
+      #newsletter #error-message .sib-icon {
+        fill: #e0533f;
+      }
+      /* main.js adds this to the button while the request is in flight */
+      #newsletter .sib-form-block__button-disabled {
+        opacity: 0.6;
+        cursor: default;
       }
       #newsletter .entry__error {
         display: block;
@@ -1412,6 +1441,11 @@
           <!-- Begin Brevo Form -->
           <div class="sib-form">
             <div id="sib-form-container" class="sib-form-container">
+              <!-- Heading sits outside #sib-container so it survives the
+                   form being hidden on success (AUTOHIDE). -->
+              <div class="nl-title">
+                <p>Get Updates</p>
+              </div>
               <div id="error-message" class="sib-form-message-panel">
                 <div class="sib-form-message-panel__text sib-form-message-panel__text--center">
                   <svg viewBox="0 0 512 512" class="sib-icon sib-notification__icon" aria-hidden="true">
@@ -1428,15 +1462,12 @@
                     <path d="M256 8C119.033 8 8 119.033 8 256s111.033 248 248 248 248-111.033 248-248S392.967 8 256 8zm0 464c-118.664 0-216-96.055-216-216 0-118.663 96.055-216 216-216 118.664 0 216 96.055 216 216 0 118.663-96.055 216-216 216zm141.63-274.961L217.15 376.071c-4.705 4.667-12.303 4.637-16.97-.068l-85.878-86.572c-4.667-4.705-4.637-12.303.068-16.97l8.52-8.451c4.705-4.667 12.303-4.637 16.97.068l68.976 69.533 163.441-162.13c4.705-4.667 12.303-4.637 16.97.068l8.451 8.52c4.668 4.705 4.637 12.303-.068 16.97z" />
                   </svg>
                   <span class="sib-form-message-panel__inner-text">
-                    Your subscription has been successful.
+                    You're on the list. Check your email.
                   </span>
                 </div>
               </div>
               <div id="sib-container" class="sib-container--large sib-container--vertical">
                 <form id="sib-form" method="POST" action="https://a2cf0a44.sibforms.com/serve/MUIFAHkAs9zwFuS3Z1GZApaiJjhI0BjmDr0j8_U0eLbqJD3Gvl9Co_dmEFZ0qLLssVXdS-ALeQgX4L5wDB2CzszUqJGbLqUSGnTtDtIH80VaWCey_ge1DJqrjR5Gu5MguR9Ne24xFyBJD_QdZDO12s0atSurx-B9VFTWky4ek8Nfh2DG6LOcXuktEQ_PngTAHsc_1AhPsoPObTjAgw==" data-type="subscription">
-                  <div class="sib-form-block nl-title">
-                    <p>Get Updates</p>
-                  </div>
                   <div class="sib-form-block nl-sub">
                     <div class="sib-text-form-block">
                       <p>Occasional specials and promotions, plus when we open and close for the season.</p>
@@ -1562,8 +1593,35 @@
           selectedOptions: "{quantity} selected",
         },
       };
-      var AUTOHIDE = Boolean(0);
+      // Hide the form itself once the signup succeeds, so the success
+      // panel is the only thing left in the card (main.js reads this).
+      var AUTOHIDE = Boolean(1);
     </script>
     <script defer src="https://sibforms.com/forms/end-form/build/main.js"></script>
+    <script>
+      // main.js overwrites the success panel's text with whatever message the
+      // Brevo account returns. Pin our own copy whenever the panel is shown.
+      (function () {
+        var panel = document.getElementById("success-message");
+        if (!panel || !window.MutationObserver) return;
+        var COPY = "You're on the list. Check your email.";
+
+        function pin() {
+          if (!panel.classList.contains("sib-form-message-panel--active")) return;
+          var text = panel.getElementsByClassName(
+            "sib-form-message-panel__inner-text"
+          )[0];
+          if (text && text.innerText.trim() !== COPY) text.innerText = COPY;
+        }
+
+        new MutationObserver(pin).observe(panel, {
+          attributes: true,
+          attributeFilter: ["class"],
+          childList: true,
+          subtree: true,
+          characterData: true,
+        });
+      })();
+    </script>
   </body>
 </html>
