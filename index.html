@@ -998,11 +998,13 @@
         border-top: 3px solid var(--amber);
         padding-block: 2.5rem;
       }
+      /* the lockup and the meta lines stop fitting side by side below ~570px,
+         so mobile centers every line on one axis; the split returns at 620px */
       .foot-inner {
         display: flex;
         flex-wrap: wrap;
         align-items: center;
-        justify-content: space-between;
+        justify-content: center;
         gap: 1.25rem;
       }
       .foot-inner img {
@@ -1012,10 +1014,18 @@
       .foot-meta {
         font-size: 0.85rem;
         color: var(--cream-dim);
-        text-align: right;
+        text-align: center;
       }
       .foot-meta a {
         color: var(--amber);
+      }
+      @media (min-width: 620px) {
+        .foot-inner {
+          justify-content: space-between;
+        }
+        .foot-meta {
+          text-align: right;
+        }
       }
 
       /* ===================================================================
