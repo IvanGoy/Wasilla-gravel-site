@@ -41,6 +41,12 @@
 			text-transform: uppercase;
 			visibility: visible;
 
+			img {
+				display: block;
+				height: 2.4rem;
+				width: auto;
+			}
+
 			&:hover {
 				border-color: _palette(invert, accent) !important;
 				color: _palette(invert, accent) !important;
@@ -58,6 +64,10 @@
 			.logo {
 				font-size: 1.75rem;
 				border-width: 3px !important;
+
+				img {
+					height: 1.75rem;
+				}
 			}
 		}
 	}
